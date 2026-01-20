@@ -2,4 +2,4 @@
 
 Personal site for Jason Doffing — Director of Engineering, founder of [AROps](https://arops.dev).
 
-🌐 [jason-doffing.com](https://jason-doffing.com)
+🌐 [jasondoffing.com](https://jasondoffing.com)
