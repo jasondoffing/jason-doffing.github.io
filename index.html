@@ -301,6 +301,13 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        a.commons-card:hover {
+            cursor: pointer;
         }
         
         .commons-card::before {
@@ -640,12 +647,12 @@
                 </div>
                 
                 <!-- The Library -->
-                <div class="commons-card library">
+                <a href="library.html" class="commons-card library">
                     <div class="card-icon">◈</div>
                     <h3 class="card-title">The Library</h3>
                     <p class="card-description">Narratives, frameworks, and accumulated knowledge. Proof that the architecture works—from technical deep-dives to the stories that emerge when systems endure.</p>
-                    <span class="card-status">● Emerging</span>
-                </div>
+                    <span class="card-status">Enter The Library →</span>
+                </a>
             </div>
         </div>
     </section>
