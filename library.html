@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Library | Jason Doffing</title>
+    <meta name="description" content="Narratives, frameworks, and accumulated knowledge. Essays on entropy resistance, AI governance, and building systems that endure.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Colors - Structured Depth */
+            --void: #0a0e17;
+            --deep-navy: #0d1321;
+            --slate: #1a2332;
+            --steel: #2d3a4d;
+            --silver: #8892a0;
+            --cloud: #c5cdd8;
+            --white: #f0f4f8;
+            
+            /* Accent Colors */
+            --cyan: #00d4ff;
+            --cyan-dim: rgba(0, 212, 255, 0.15);
+            --emerald: #10b981;
+            --emerald-dim: rgba(16, 185, 129, 0.15);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.15);
+            --amber-glow: rgba(245, 158, 11, 0.4);
+            
+            /* Typography */
+            --font-display: 'Fraunces', Georgia, serif;
+            --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background: var(--void);
+            color: var(--cloud);
+            line-height: 1.7;
+            font-size: 17px;
+        }
+        
+        /* Background Texture - Amber tinted for Library */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        /* Navigation */
+        .nav {
+            padding: var(--space-md) 0;
+            border-bottom: 1px solid var(--slate);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-home {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--silver);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-home:hover {
+            color: var(--amber);
+        }
+        
+        .nav-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        
+        .nav-title span {
+            color: var(--amber);
+        }
+        
+        /* Library Header */
+        .library-header {
+            padding: var(--space-xl) 0 var(--space-lg);
+            text-align: center;
+            position: relative;
+        }
+        
+        .library-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+        }
+        
+        .library-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: var(--amber-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-md);
+            font-size: 2.5rem;
+        }
+        
+        .library-header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .library-header p {
+            color: var(--silver);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        /* Series Section */
+        .series-section {
+            padding: var(--space-lg) 0;
+        }
+        
+        .series-header {
+            margin-bottom: var(--space-md);
+        }
+        
+        .series-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--amber);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .series-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .series-description {
+            color: var(--silver);
+            max-width: 700px;
+        }
+        
+        /* Post Cards */
+        .posts-grid {
+            display: grid;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+        
+        .post-card {
+            background: var(--slate);
+            border-radius: 12px;
+            padding: var(--space-md);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--space-md);
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--amber);
+        }
+        
+        .post-card:hover {
+            transform: translateX(4px);
+            border-color: var(--steel);
+            box-shadow: 0 10px 30px var(--amber-dim);
+        }
+        
+        .post-number {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--amber);
+            opacity: 0.5;
+            width: 60px;
+            text-align: center;
+        }
+        
+        .post-content {
+            min-width: 0;
+        }
+        
+        .post-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .post-excerpt {
+            color: var(--silver);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .post-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--steel);
+            text-align: right;
+            white-space: nowrap;
+        }
+        
+        .post-date {
+            margin-bottom: 0.25rem;
+        }
+        
+        .post-reading-time {
+            color: var(--silver);
+        }
+        
+        .post-arrow {
+            color: var(--amber);
+            font-size: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        
+        .post-card:hover .post-arrow {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+        
+        /* Coming Soon State */
+        .post-card.coming-soon {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .post-card.coming-soon::before {
+            background: var(--steel);
+        }
+        
+        .post-card.coming-soon .post-number {
+            color: var(--steel);
+        }
+        
+        .coming-soon-badge {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--steel);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--deep-navy);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--slate), transparent);
+            margin: var(--space-lg) 0;
+        }
+        
+        /* Future Series Placeholder */
+        .future-series {
+            text-align: center;
+            padding: var(--space-lg) 0;
+            color: var(--steel);
+        }
+        
+        .future-series p {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Footer */
+        footer {
+            padding: var(--space-md) 0;
+            border-top: 1px solid var(--slate);
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+        
+        footer p {
+            font-size: 0.85rem;
+            color: var(--steel);
+        }
+        
+        footer a {
+            color: var(--silver);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            color: var(--amber);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .post-card {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+            
+            .post-number {
+                width: auto;
+                text-align: left;
+                font-size: 1.5rem;
+            }
+            
+            .post-meta {
+                text-align: left;
+                display: flex;
+                gap: var(--space-sm);
+            }
+            
+            .post-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-content">
+            <a href="index.html" class="nav-home">← Back to Commons</a>
+            <div class="nav-title">The <span>Library</span></div>
+        </div>
+    </nav>
+    
+    <!-- Library Header -->
+    <header class="library-header">
+        <div class="container">
+            <div class="library-icon">◈</div>
+            <h1>The Library</h1>
+            <p>Narratives, frameworks, and accumulated knowledge. Essays exploring entropy resistance—from the forces that erode our foundations to the architectures that let us endure.</p>
+        </div>
+    </header>
+    
+    <!-- Series: Digital Ice Age -->
+    <section class="series-section">
+        <div class="container">
+            <div class="series-header">
+                <div class="series-label">Series</div>
+                <h2 class="series-title">The Digital Ice Age</h2>
+                <p class="series-description">A three-part examination of the epistemic crisis facing human knowledge in the age of AI—and the foundations we must build to survive it.</p>
+            </div>
+            
+            <div class="posts-grid">
+                <!-- Post 1 -->
+                <a href="posts/digital-ice-age.html" class="post-card">
+                    <div class="post-number">01</div>
+                    <div class="post-content">
+                        <h3 class="post-title">The Digital Ice Age Is Here</h3>
+                        <p class="post-excerpt">The glaciers are already moving. AI-generated content is burying human knowledge under layers of synthetic sediment. What happens when we can no longer distinguish bedrock from debris?</p>
+                    </div>
+                    <div class="post-meta">
+                        <div class="post-date">Apr 2026</div>
+                        <div class="post-reading-time">12 min read</div>
+                    </div>
+                    <span class="post-arrow">→</span>
+                </a>
+                
+                <!-- Post 2 -->
+                <a href="posts/the-scour-beneath.html" class="post-card">
+                    <div class="post-number">02</div>
+                    <div class="post-content">
+                        <h3 class="post-title">The Scour Beneath</h3>
+                        <p class="post-excerpt">Beneath the advancing ice, something more dangerous is happening. The very foundations of trust are being scoured away. This is the erosion no one is talking about.</p>
+                    </div>
+                    <div class="post-meta">
+                        <div class="post-date">Apr 2026</div>
+                        <div class="post-reading-time">10 min read</div>
+                    </div>
+                    <span class="post-arrow">→</span>
+                </a>
+                
+                <!-- Post 3 - Coming Soon -->
+                <div class="post-card coming-soon">
+                    <div class="post-number">03</div>
+                    <div class="post-content">
+                        <h3 class="post-title">Finding Bedrock, Building New Ground</h3>
+                        <p class="post-excerpt">The ice will recede. When it does, what will remain? A meditation on the foundations worth preserving—and the new architectures we must build from what survives.</p>
+                    </div>
+                    <div class="post-meta">
+                        <span class="coming-soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Future Series Placeholder -->
+    <section class="future-series">
+        <div class="container">
+            <p>More narratives emerging...</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Jason Doffing. <a href="index.html">Return to the Commons</a> · <a href="https://arops.dev">arops.dev</a></p>
+        </div>
+    </footer>
+</body>
+</html>
